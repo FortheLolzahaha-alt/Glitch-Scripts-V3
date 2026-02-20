@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glitch Scripts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: #050508;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Animated Background */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .glow-orb:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            background: rgba(0, 255, 136, 0.15);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .glow-orb:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 150, 255, 0.1);
+            bottom: -50px;
+            right: -50px;
+            animation-delay: 5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -30px) scale(1.1); }
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            color: #00ff88;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff00ff;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim-1 3s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #00ffff;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim-1 {
+            0% { clip: rect(20px, 9999px, 50px, 0); }
+            20% { clip: rect(80px, 9999px, 120px, 0); }
+            40% { clip: rect(10px, 9999px, 60px, 0); }
+            60% { clip: rect(90px, 9999px, 130px, 0); }
+            80% { clip: rect(40px, 9999px, 80px, 0); }
+            100% { clip: rect(70px, 9999px, 110px, 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(60px, 9999px, 100px, 0); }
+            20% { clip: rect(10px, 9999px, 50px, 0); }
+            40% { clip: rect(100px, 9999px, 140px, 0); }
+            60% { clip: rect(30px, 9999px, 70px, 0); }
+            80% { clip: rect(120px, 9999px, 160px, 0); }
+            100% { clip: rect(50px, 9999px, 90px, 0); }
+        }
+
+        /* Card Styles */
+        .script-card {
+            background: linear-gradient(135deg, rgba(10, 10, 15, 0.9), rgba(20, 20, 30, 0.8));
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .script-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ff88, #00ccff, #00ff88);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s;
+            border-radius: inherit;
+        }
+
+        .script-card:hover::before {
+            opacity: 0.5;
+            animation: borderRotate 3s linear infinite;
+        }
+
+        @keyframes borderRotate {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .script-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 255, 136, 0.3);
+            border-color: rgba(0, 255, 136, 0.6);
+        }
+
+        /* Feature Toggle Animation */
+        .feature-toggle {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .feature-toggle.active {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .feature-toggle.active .status-dot {
+            background: #00ff88;
+            box-shadow: 0 0 10px #00ff88;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff4444;
+            transition: all 0.3s;
+        }
+
+        /* Button Effects */
+        .btn-glow {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-glow:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-glow:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+        }
+
+        /* Scanline Effect */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.3;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0f;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00ff88;
+            border-radius: 4px;
+        }
+
+        /* Typing Effect */
+        .typing-text::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Particle Canvas */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="glow-orb"></div>
+    <div class="glow-orb"></div>
+    <canvas id="particles"></canvas>
+    <div class="scanlines"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black/50 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-lg flex items-center justify-center font-orbitron font-bold text-black text-xl">
+                    G
+                </div>
+                <span class="font-orbitron font-bold text-xl tracking-wider text-white">GLITCH<span class="text-green-400">SCRIPTS</span></span>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-medium tracking-widest">
+                <a href="#features" class="hover:text-green-400 transition-colors">FEATURES</a>
+                <a href="#preview" class="hover:text-green-400 transition-colors">PREVIEW</a>
+                <a href="#download" class="hover:text-green-400 transition-colors">DOWNLOAD</a>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                <span class="text-xs text-green-400 font-mono">ONLINE: 2,847</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8 z-10">
+                <div class="inline-block px-4 py-1 rounded-full border border-green-400/30 bg-green-400/10 text-green-400 text-xs font-bold tracking-widest">
+                    VERSION 2.0 • UNDETECTED
+                </div>
+                <h1 class="font-orbitron text-5xl md:text-7xl font-black leading-tight">
+                    <span class="glitch" data-text="ARSENAL">ARSENAL</span><br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400">GLITCH V2</span>
+                </h1>
+                <p class="text-gray-400 text-lg md:text-xl max-w-lg typing-text" id="typing">
+                    The most advanced Arsenal script with Aimbot, ESP, and exclusive Rainbow features.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="scrollToDownload()" class="btn-glow px-8 py-4 rounded-lg font-bold text-black tracking-wider flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        GET SCRIPT
+                    </button>
+                    <button onclick="togglePreview()" class="px-8 py-4 rounded-lg border border-white/20 hover:border-green-400 hover:text-green-400 transition-all font-bold tracking-wider flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        LIVE PREVIEW
+                    </button>
+                </div>
+                <div class="flex gap-6 text-sm text-gray-500">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        <span>Best Esp</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        <span>PC Support</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        <span>Best Aimbot</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        <span>Works for All Executors</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Preview Card -->
+            <div class="relative" id="preview">
+                <div class="script-card rounded-2xl p-1">
+                    <div class="bg-black/80 rounded-xl overflow-hidden">
+                        <!-- Card Header -->
+                        <div class="bg-gradient-to-r from-gray-900 to-black p-4 border-b border-white/10 flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                <span class="ml-2 text-xs text-gray-500 font-mono">ARSENAL_GLITCH_V2.exe</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded border border-green-500/30">RUNNING</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Screenshot Container -->
+                        <div class="relative group cursor-pointer" onclick="openLightbox()">
+                            <img src="/mnt/kimi/upload/Ekran görüntüsü 2026-02-19 204330.png" alt="Arsenal Glitch V2 Interface" class="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                            
+                            <!-- Hover Overlay -->
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                                <div class="text-center transform scale-90 group-hover:scale-100 transition-transform">
+                                    <div class="w-16 h-16 rounded-full bg-green-400/20 border-2 border-green-400 flex items-center justify-center mx-auto mb-3">
+                                        <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
+                                    </div>
+                                    <p class="text-green-400 font-bold tracking-widest">CLICK TO EXPAND</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Floating Stats -->
+                            <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+                                <div class="bg-black/80 backdrop-blur-md rounded-lg p-3 border border-white/10">
+                                    <div class="text-xs text-gray-400 mb-1">STATUS</div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                        <span class="text-green-400 font-bold text-sm">INJECTED</span>
+                                    </div>
+                                </div>
+                                <div class="bg-black/80 backdrop-blur-md rounded-lg p-3 border border-white/10 text-right">
+                                    <div class="text-xs text-gray-400 mb-1">FPS</div>
+                                    <div class="text-cyan-400 font-mono font-bold text-lg">240</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Features -->
+                        <div class="p-4 grid grid-cols-2 gap-3 bg-gray-900/50">
+                            <div class="feature-toggle active rounded-lg p-3 flex justify-between items-center cursor-pointer" onclick="toggleFeature(this)">
+                                <span class="text-sm font-medium">Rainbow ESP</span>
+                                <div class="status-dot"></div>
+                            </div>
+                            <div class="feature-toggle rounded-lg p-3 flex justify-between items-center cursor-pointer" onclick="toggleFeature(this)">
+                                <span class="text-sm font-medium">Aimbot</span>
+                                <div class="status-dot"></div>
+                            </div>
+                            <div class="feature-toggle rounded-lg p-3 flex justify-between items-center cursor-pointer" onclick="toggleFeature(this)">
+                                <span class="text-sm font-medium">Auto-Kill</span>
+                                <div class="status-dot"></div>
+                            </div>
+                            <div class="feature-toggle rounded-lg p-3 flex justify-between items-center cursor-pointer" onclick="toggleFeature(this)">
+                                <span class="text-sm font-medium">Fly Mode</span>
+                                <div class="status-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Decorative Elements -->
+                <div class="absolute -top-4 -right-4 w-24 h-24 bg-green-400/20 rounded-full blur-2xl"></div>
+                <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-cyan-400/20 rounded-full blur-2xl"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section id="features" class="py-20 px-6 bg-black/30">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-orbitron text-4xl font-bold mb-4">FEATURES</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-green-400 to-cyan-400 mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Feature 1 -->
+                <div class="script-card rounded-xl p-6 group hover:scale-105 transition-transform">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-4 text-2xl">
+                        🎯
+                    </div>
+                    <h3 class="font-orbitron font-bold text-xl mb-2 text-white">Precision Aimbot</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Silent aim with customizable FOV, smoothness, and target selection. Undetectable by anti-cheat systems.</p>
+                    <div class="mt-4 flex gap-2">
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-500">Silent</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-500">Custom FOV</span>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="script-card rounded-xl p-6 group hover:scale-105 transition-transform">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-400 to-cyan-400 flex items-center justify-center mb-4 text-2xl">
+                        👁️
+                    </div>
+                    <h3 class="font-orbitron font-bold text-xl mb-2 text-white">Rainbow ESP</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Advanced ESP with rainbow chams, skeletons, and distance indicators. See enemies through walls with style.</p>
+                    <div class="mt-4 flex gap-2">
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-500">Chams</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-500">Skeleton</span>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="script-card rounded-xl p-6 group hover:scale-105 transition-transform">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center mb-4 text-2xl">
+                        ⚡
+                    </div>
+                    <h3 class="font-orbitron font-bold text-xl mb-2 text-white">Auto-Kill Farm</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Automated kill farming with teleportation, instant headshots, and XP boosting capabilities.</p>
+                    <div class="mt-4 flex gap-2">
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-500">Auto-Farm</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-500">TP Kill</span>
+                    </div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="script-card rounded-xl p-6 group hover:scale-105 transition-transform">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center mb-4 text-2xl">
+                        🚀
+                    </div>
+                    <h3 class="font-orbitron font-bold text-xl mb-2 text-white">Fly & Noclip</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Toggle fly mode with adjustable speed. Noclip through walls and obstacles seamlessly.</p>
+                    <div class="mt-4 flex gap-2">
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-500">E Key</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-500">Speed Ctrl</span>
+                    </div>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="script-card rounded-xl p-6 group hover:scale-105 transition-transform">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-red-500 to-pink-500 flex items-center justify-center mb-4 text-2xl">
+                        🛡️
+                    </div>
+                    <h3 class="font-orbitron font-bold text-xl mb-2 text-white">Anti-AFK</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Prevents kick for being AFK. Auto-jump and movement simulation keeps you in game 24/7.</p>
+                    <div class="mt-4 flex gap-2">
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-500">Auto-Jump</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-500">24/7</span>
+                    </div>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="script-card rounded-xl p-6 group hover:scale-105 transition-transform">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-gray-400 to-white flex items-center justify-center mb-4 text-2xl">
+                        ♾️
+                    </div>
+                    <h3 class="font-orbitron font-bold text-xl mb-2 text-white">Infinite Jump</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Jump indefinitely without cooldown. Combine with fly mode for ultimate mobility.</p>
+                    <div class="mt-4 flex gap-2">
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-500">No Cooldown</span>
+                        <span class="text-xs px-2 py-1 bg-white/5 rounded text-gray-500">Bunny Hop</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="py-20 px-6 relative">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="script-card rounded-2xl p-8 md:p-12 relative overflow-hidden">
+                <!-- Background Glow -->
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-green-400/20 rounded-full blur-3xl -z-10"></div>
+                
+                <h2 class="font-orbitron text-4xl md:text-5xl font-bold mb-6">READY TO DOMINATE?</h2>
+                <p class="text-gray-400 mb-8 max-w-xl mx-auto">Join thousands of players using Arsenal Script | Glitch V2</p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+                    <button onclick="downloadScript()" class="btn-glow px-12 py-5 rounded-xl font-bold text-black text-lg tracking-wider w-full sm:w-auto relative overflow-hidden group">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            DOWNLOAD V2.0
+                        </span>
+                    </button>
+                    <div class="text-left">
+                        <div class="text-xs text-gray-500 mb-1">FILE SIZE</div>
+                        <div class="text-white font-mono">2.4 MB</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 max-w-md mx-auto text-center">
+                    <div class="p-3 rounded-lg bg-white/5">
+                        <div class="text-2xl font-bold text-green-400" id="counter-users">50K+</div>
+                        <div class="text-xs text-gray-500">Users</div>
+                    </div>
+                    <div class="p-3 rounded-lg bg-white/5">
+                        <div class="text-2xl font-bold text-cyan-400" id="counter-uptime">99.9%</div>
+                        <div class="text-xs text-gray-500">Uptime</div>
+                    </div>
+                    <div class="p-3 rounded-lg bg-white/5">
+                        <div class="text-2xl font-bold text-purple-400" id="counter-ver">v2.0</div>
+                        <div class="text-xs text-gray-500">Version</div>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm">
+                    <strong>⚠️ NOTICE:</strong> Use at your own risk. We recommend using an alt account.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-8 px-6 bg-black/50">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <span class="font-orbitron font-bold text-gray-400">ARSENAL<span class="text-green-400">GLITCH</span></span>
+                <span class="text-gray-600">|</span>
+                <span class="text-gray-600 text-sm">© 2026</span>
+            </div>
+            <div class="flex gap-6 text-sm text-gray-500">
+                <a href="https://discord.com/invite/bPeWxCX7Rb" class="hover:text-green-400 transition-colors">Discord</a>
+                <a href="https://www.youtube.com/@Buttershot" target="_blank" class="hover:text-green-400 transition-colors">YouTube</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden items-center justify-center p-4 backdrop-blur-xl" onclick="closeLightbox()">
+        <div class="relative max-w-5xl w-full" onclick="event.stopPropagation()">
+            <button onclick="closeLightbox()" class="absolute -top-12 right-0 text-white hover:text-green-400 transition-colors">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <img src="/mnt/kimi/upload/Ekran görüntüsü 2026-02-19 204330.png" alt="Arsenal Glitch V2 Full Preview" class="w-full h-auto rounded-lg border border-white/10 shadow-2xl shadow-green-400/20">
+            <div class="mt-4 text-center">
+                <p class="text-green-400 font-mono text-sm">ARSENAL_GLITCH_V2_INTERFACE_PREVIEW.png</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Particle System
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(0, 255, 136, ${this.opacity})`;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+            }
+        }
+
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Interactive Functions
+        function toggleFeature(element) {
+            element.classList.toggle('active');
+            const isActive = element.classList.contains('active');
+            const dot = element.querySelector('.status-dot');
+            
+            // Simulate feature toggle effect
+            if (isActive) {
+                element.style.transform = 'scale(0.95)';
+                setTimeout(() => element.style.transform = 'scale(1)', 100);
+            }
+        }
+
+        function openLightbox() {
+            document.getElementById('lightbox').classList.remove('hidden');
+            document.getElementById('lightbox').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.add('hidden');
+            document.getElementById('lightbox').classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        function scrollToDownload() {
+            document.getElementById('download').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function togglePreview() {
+            document.getElementById('preview').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                document.querySelector('.script-card').classList.add('ring-4', 'ring-green-400', 'ring-opacity-50');
+                setTimeout(() => {
+                    document.querySelector('.script-card').classList.remove('ring-4', 'ring-green-400', 'ring-opacity-50');
+                }, 1000);
+            }, 500);
+        }
+
+        function downloadScript() {
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<span class="relative z-10 flex items-center justify-center gap-2">⏳ PREPARING...</span>';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = '<span class="relative z-10 flex items-center justify-center gap-2">✅ COPIED TO CLIPBOARD!</span>';
+                btn.classList.remove('from-green-400', 'to-cyan-400');
+                btn.classList.add('from-blue-500', 'to-purple-500');
+                
+                // Simulate clipboard copy
+                navigator.clipboard.writeText('loadstring(game:HttpGet("https://arsenalglitch.v2/script.lua"))()');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    btn.classList.add('from-green-400', 'to-cyan-400');
+                    btn.classList.remove('from-blue-500', 'to-purple-500');
+                }, 2000);
+            }, 1500);
+        }
+
+        // Typing Effect
+        const text = "The most advanced Arsenal script with Aimbot, ESP, and exclusive Rainbow features.";
+        const typingElement = document.getElementById('typing');
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                typingElement.innerHTML = text.substring(0, i+1) + '<span class="animate-pulse">|</span>';
+                i++;
+                setTimeout(typeWriter, 50);
+            } else {
+                typingElement.innerHTML = text;
+            }
+        }
+
+        // Start typing after load
+        setTimeout(typeWriter, 500);
+
+        // Counter Animation
+        function animateCounter(id, target, suffix = '') {
+            const element = document.getElementById(id);
+            const duration = 2000;
+            const steps = 60;
+            const increment = parseFloat(target) / steps;
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= parseFloat(target)) {
+                    element.textContent = target + suffix;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + suffix;
+                }
+            }, duration / steps);
+        }
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.id === 'counter-users') animateCounter('counter-users', 50, 'K+');
+                    if (entry.target.id === 'counter-uptime') animateCounter('counter-uptime', 99.9, '%');
+                }
+            });
+        });
+
+        document.querySelectorAll('#counter-users, #counter-uptime').forEach(el => observer.observe(el));
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // Parallax effect on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelectorAll('.glow-orb');
+            parallax.forEach((el, index) => {
+                const speed = 0.5 + (index * 0.2);
+                el.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
